@@ -110,7 +110,11 @@ const asErrorMessage = (error: unknown) =>
 type PanelProxy = {
   all:
     | string
-    | { url: string; basicAuth: { username: string; password: string } }
+    | {
+        url: string
+        basicAuth?: { username: string; password: string }
+        noProxy?: string
+      }
 }
 
 /**
