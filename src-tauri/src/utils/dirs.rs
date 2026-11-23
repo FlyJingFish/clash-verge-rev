@@ -245,7 +245,7 @@ fn sidecar_ipc_path_for(_app_root: &std::path::Path, identity: &clash_verge_serv
 fn sidecar_pipe_name(identity: &clash_verge_service_ipc::OwnerIdentity, is_dev: bool) -> String {
     let flavor = if is_dev { "dev" } else { "release" };
     format!(
-        r"\\.\pipe\verge-mihomo-sidecar-{flavor}-{}",
+        r"\\.\pipe\myclash-mihomo-sidecar-{flavor}-{}",
         clash_verge_service_ipc::owner_key(identity)
     )
 }
@@ -310,7 +310,7 @@ mod ipc_tests {
         assert_eq!(
             path,
             Path::new(&format!(
-                r"\\.\pipe\verge-mihomo-sidecar-{}-{}",
+                r"\\.\pipe\myclash-mihomo-sidecar-{}-{}",
                 if cfg!(feature = "verge-dev") { "dev" } else { "release" },
                 clash_verge_service_ipc::owner_key(&identity)
             ))
@@ -348,11 +348,11 @@ mod windows_pipe_name_tests {
 
         assert_eq!(
             sidecar_pipe_name(&identity, false),
-            format!(r"\\.\pipe\verge-mihomo-sidecar-release-{owner_key}")
+            format!(r"\\.\pipe\myclash-mihomo-sidecar-release-{owner_key}")
         );
         assert_eq!(
             sidecar_pipe_name(&identity, true),
-            format!(r"\\.\pipe\verge-mihomo-sidecar-dev-{owner_key}")
+            format!(r"\\.\pipe\myclash-mihomo-sidecar-dev-{owner_key}")
         );
     }
 }

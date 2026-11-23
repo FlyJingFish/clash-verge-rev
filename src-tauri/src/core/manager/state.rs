@@ -19,7 +19,9 @@ use tauri_plugin_shell::ShellExt as _;
 
 pub(super) fn explain_core_occupancy(error: anyhow::Error) -> anyhow::Error {
     let detail = error.to_string();
-    if detail.starts_with("process verge-mihomo") && detail.ends_with("; refusing a second core") {
+    if (detail.starts_with("process verge-mihomo") || detail.starts_with("process myclash-mihomo"))
+        && detail.ends_with("; refusing a second core")
+    {
         error.context(clash_verge_i18n::t!("core.alreadyRunning").into_owned())
     } else {
         error
@@ -161,8 +163,7 @@ impl CoreManager {
     #[tracing::instrument(skip_all, level = "info", fields(pid = tracing::field::Empty))]
     pub(super) async fn start_core_by_sidecar(&self) -> Result<()> {
         self.wait_for_sidecar_exit().await?;
-        let execution = clash_verge_service_ipc::execution::reserve_sidecar()
-            .await
+        let execution = super::reservation::SidecarReservation::acquire()
             .inspect_err(service::record_residual_service)
             .map_err(explain_core_occupancy)?;
         self.core_stopped();
@@ -524,7 +525,7 @@ mod readiness_tests {
     #[test]
     fn core_occupancy_explanation_preserves_the_original_error() {
         for detail in [
-            "process verge-mihomo remains after IPC failure; refusing a second core",
+            "process myclash-mihomo remains after IPC failure; refusing a second core",
             "process verge-mihomo-alpha.exe (PID 123) is still running; refusing a second core",
         ] {
             let error = super::explain_core_occupancy(anyhow::anyhow!(detail));

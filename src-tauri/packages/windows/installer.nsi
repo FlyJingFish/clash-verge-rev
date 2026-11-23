@@ -572,35 +572,35 @@ FunctionEnd
     !endif
   ${EndIf}
 
-  ; Check if verge-mihomo-alpha.exe is running
+  ; Check if myclash-mihomo-alpha.exe is running
   !if "${INSTALLMODE}" == "currentUser"
-    nsis_tauri_utils::FindProcessCurrentUser "verge-mihomo-alpha.exe"
+    nsis_tauri_utils::FindProcessCurrentUser "myclash-mihomo-alpha.exe"
   !else
-    nsis_tauri_utils::FindProcess "verge-mihomo-alpha.exe"
+    nsis_tauri_utils::FindProcess "myclash-mihomo-alpha.exe"
   !endif
   Pop $R0
   ${If} $R0 = 0
-    DetailPrint "Kill verge-mihomo-alpha.exe..."
+    DetailPrint "Kill myclash-mihomo-alpha.exe..."
     !if "${INSTALLMODE}" == "currentUser"
-      nsis_tauri_utils::KillProcessCurrentUser "verge-mihomo-alpha.exe"
+      nsis_tauri_utils::KillProcessCurrentUser "myclash-mihomo-alpha.exe"
     !else
-      nsis_tauri_utils::KillProcess "verge-mihomo-alpha.exe"
+      nsis_tauri_utils::KillProcess "myclash-mihomo-alpha.exe"
     !endif
   ${EndIf}
 
-  ; Check if verge-mihomo.exe is running
+  ; Check if myclash-mihomo.exe is running
   !if "${INSTALLMODE}" == "currentUser"
-    nsis_tauri_utils::FindProcessCurrentUser "verge-mihomo.exe"
+    nsis_tauri_utils::FindProcessCurrentUser "myclash-mihomo.exe"
   !else
-    nsis_tauri_utils::FindProcess "verge-mihomo.exe"
+    nsis_tauri_utils::FindProcess "myclash-mihomo.exe"
   !endif
   Pop $R0
   ${If} $R0 = 0
-    DetailPrint "Kill verge-mihomo.exe..."
+    DetailPrint "Kill myclash-mihomo.exe..."
     !if "${INSTALLMODE}" == "currentUser"
-      nsis_tauri_utils::KillProcessCurrentUser "verge-mihomo.exe"
+      nsis_tauri_utils::KillProcessCurrentUser "myclash-mihomo.exe"
     !else
-      nsis_tauri_utils::KillProcess "verge-mihomo.exe"
+      nsis_tauri_utils::KillProcess "myclash-mihomo.exe"
     !endif
   ${EndIf}
 
@@ -973,16 +973,16 @@ Section Install
   ; exactly the bytes this installer unpacked: a core swapped on disk is refused, not published.
   ; Not fatal on failure; a later elevated service install can stage the cores again.
   !ifdef MIHOMO_SHA256
-    DetailPrint "Staging verge-mihomo for ${PRODUCTNAME} Service..."
-    nsExec::ExecToLog '"$INSTDIR\resources\clash-verge-service-install.exe" --install-core "$INSTDIR\verge-mihomo.exe" --sha256 "${MIHOMO_SHA256}"'
+    DetailPrint "Staging myclash-mihomo for ${PRODUCTNAME} Service..."
+    nsExec::ExecToLog '"$INSTDIR\resources\clash-verge-service-install.exe" --install-core "$INSTDIR\myclash-mihomo.exe" --sha256 "${MIHOMO_SHA256}"'
     Pop $0
-    ${IfThen} $0 != 0 ${|} DetailPrint "Staging verge-mihomo returned $0" ${|}
+    ${IfThen} $0 != 0 ${|} DetailPrint "Staging myclash-mihomo returned $0" ${|}
   !endif
   !ifdef MIHOMO_ALPHA_SHA256
-    DetailPrint "Staging verge-mihomo-alpha for ${PRODUCTNAME} Service..."
-    nsExec::ExecToLog '"$INSTDIR\resources\clash-verge-service-install.exe" --install-core "$INSTDIR\verge-mihomo-alpha.exe" --sha256 "${MIHOMO_ALPHA_SHA256}"'
+    DetailPrint "Staging myclash-mihomo-alpha for ${PRODUCTNAME} Service..."
+    nsExec::ExecToLog '"$INSTDIR\resources\clash-verge-service-install.exe" --install-core "$INSTDIR\myclash-mihomo-alpha.exe" --sha256 "${MIHOMO_ALPHA_SHA256}"'
     Pop $0
-    ${IfThen} $0 != 0 ${|} DetailPrint "Staging verge-mihomo-alpha returned $0" ${|}
+    ${IfThen} $0 != 0 ${|} DetailPrint "Staging myclash-mihomo-alpha returned $0" ${|}
   !endif
 
   !insertmacro StartVergeService
@@ -1158,8 +1158,8 @@ Section Uninstall
   {{/each}}
 
   ; A failed core upgrade leaves the displaced binary behind; it is never user data.
-  Delete "$INSTDIR\verge-mihomo.old"
-  Delete "$INSTDIR\verge-mihomo-alpha.old"
+  Delete "$INSTDIR\myclash-mihomo.old"
+  Delete "$INSTDIR\myclash-mihomo-alpha.old"
 
   ; Delete app associations
   {{#each file_associations as |association| ~}}

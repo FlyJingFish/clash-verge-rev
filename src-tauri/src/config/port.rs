@@ -326,7 +326,7 @@ mod tests {
         let ports = configured_listener_ports(&IClashTemp::template(), &IVerge::template());
         assert!(ports.contains(&7898));
         assert!(ports.contains(&7899));
-        assert!(ports.contains(&9097));
+        assert!(ports.contains(&19097));
         #[cfg(not(target_os = "windows"))]
         assert!(ports.contains(&7895));
         #[cfg(target_os = "linux")]

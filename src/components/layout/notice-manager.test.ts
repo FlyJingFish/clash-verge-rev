@@ -28,7 +28,7 @@ afterEach(() => {
 it.each([
   [
     'startup',
-    'process verge-mihomo remains after IPC failure; refusing a second core',
+    'process myclash-mihomo remains after IPC failure; refusing a second core',
   ],
   [
     'restart',

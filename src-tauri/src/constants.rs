@@ -1,14 +1,19 @@
 use std::time::Duration;
 
+pub mod clash_core {
+    pub const STABLE: &str = "myclash-mihomo";
+    pub const ALPHA: &str = "myclash-mihomo-alpha";
+}
+
 pub mod network {
-    pub const DEFAULT_EXTERNAL_CONTROLLER: &str = "127.0.0.1:9097";
+    pub const DEFAULT_EXTERNAL_CONTROLLER: &str = "127.0.0.1:19097";
 
     pub mod ports {
         #[cfg(not(target_os = "windows"))]
         pub const DEFAULT_REDIR: u16 = 7895;
         #[cfg(target_os = "linux")]
         pub const DEFAULT_TPROXY: u16 = 7896;
-        pub const DEFAULT_MIXED: u16 = 7897;
+        pub const DEFAULT_MIXED: u16 = 17897;
         pub const DEFAULT_SOCKS: u16 = 7898;
         pub const DEFAULT_HTTP: u16 = 7899;
     }

@@ -648,7 +648,7 @@ impl CoreManager {
                     run_service_start_with_sidecar_fallback(
                         || self.start_core_by_service(),
                         || async {
-                            clash_verge_service_ipc::execution::check_sidecar_available()
+                            super::reservation::confirm_sidecar_idle()
                                 .await
                                 .map_err(super::state::explain_core_occupancy)
                         },
@@ -696,7 +696,7 @@ impl CoreManager {
             ServiceHealth::VersionMismatch => "registered service is unavailable or incompatible".to_owned(),
             _ => return Ok(()),
         };
-        if let Err(error) = clash_verge_service_ipc::execution::check_sidecar_available()
+        if let Err(error) = super::reservation::confirm_sidecar_idle()
             .await
             .map_err(super::state::explain_core_occupancy)
         {

@@ -1,6 +1,7 @@
 use super::SeqMap;
 use crate::{
     config::PrfItem,
+    constants::clash_core,
     utils::{dirs, help},
 };
 use serde_yaml_ng::Mapping;
@@ -114,7 +115,7 @@ impl ChainSupport {
         match core {
             Some(core) => matches!(
                 (self, core.as_str()),
-                (Self::ClashMeta, "verge-mihomo") | (Self::ClashMetaAlpha, "verge-mihomo-alpha")
+                (Self::ClashMeta, clash_core::STABLE) | (Self::ClashMetaAlpha, clash_core::ALPHA)
             ),
             None => true,
         }
