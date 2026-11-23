@@ -3,8 +3,10 @@ import ForkRightOutlinedIcon from '@mui/icons-material/ForkRightOutlined'
 import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined'
 import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined'
 import LockOpenOutlinedIcon from '@mui/icons-material/LockOpenOutlined'
+import SettingsEthernetOutlinedIcon from '@mui/icons-material/SettingsEthernetOutlined'
 import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined'
 import SubjectOutlinedIcon from '@mui/icons-material/SubjectOutlined'
+import SwapHorizOutlinedIcon from '@mui/icons-material/SwapHorizOutlined'
 import WifiOutlinedIcon from '@mui/icons-material/WifiOutlined'
 import { type ComponentType, type ReactNode } from 'react'
 
@@ -21,6 +23,7 @@ import { navigationItems } from './_navigation-meta'
 import ConnectionsPage from './connections'
 import HomePage from './home'
 import LogsPage from './logs'
+import PortSwitchPage from './port-switch'
 import ProfilePage from './profiles'
 import ProxyPage from './proxies'
 import RulesPage from './rules'
@@ -49,6 +52,14 @@ export const navItems: NavigationItem[] = [
     ...navigationItems.profiles,
     icon: [<DnsOutlinedIcon key="mui" />, <ProfilesSvg key="svg" />],
     Component: ProfilePage,
+  },
+  {
+    ...navigationItems.port,
+    icon: [
+      <SettingsEthernetOutlinedIcon key="mui" />,
+      <SwapHorizOutlinedIcon key="svg" />,
+    ],
+    Component: PortSwitchPage,
   },
   {
     ...navigationItems.connections,

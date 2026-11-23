@@ -208,6 +208,7 @@ export interface TranslationResources {
             connections: string
             home: string
             logs: string
+            port: string
             profiles: string
             proxies: string
             rules: string
@@ -252,6 +253,39 @@ export interface TranslationResources {
           quitCoreStopFailed: string
           restartCoreStopFailed: string
         }
+      }
+      portSwitch: {
+        currentPort: string
+        delete: string
+        deleteCancel: string
+        deleteConfirm: string
+        deleteOk: string
+        deleteTitle: string
+        disabled: string
+        dropHint: string
+        dropping: string
+        empty: string
+        hint: string
+        import: string
+        imported: string
+        importedProfile: string
+        importedWithPort: string
+        nextPort: string
+        noInbound: string
+        panelPort: string
+        portLocked: string
+        portLockedHint: string
+        protocol: string
+        randomHint: string
+        randomTesting: string
+        refresh: string
+        remoteWarning: string
+        server: string
+        switch: string
+        switched: string
+        switchRandom: string
+        synced: string
+        title: string
       }
     }
     logs: {
@@ -1589,6 +1623,7 @@ export interface TranslationResources {
           noDisney: string
           originalsOnly: string
           pending: string
+          risky: string
           unsupportedRegion: string
           yes: string
         }

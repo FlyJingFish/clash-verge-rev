@@ -9,6 +9,7 @@
         "rules": "規 則",
         "logs": "日 誌",
         "unlock": "解 鎖",
+        "port": "端 口",
         "settings": "設 定"
       },
       "menu": {
@@ -51,6 +52,39 @@
       "tunTitle": "TUN 模式需要系統服務",
       "tunMessage": "TUN 模式需要 Clash Verge 系統服務才能接管網路流量。安裝完成後會自動為你開啟 TUN 模式。"
     }
+  },
+  "portSwitch": {
+    "title": "端口",
+    "import": "导入 install-result.env",
+    "refresh": "同步节点",
+    "delete": "Delete config",
+    "deleteTitle": "Delete config",
+    "deleteConfirm": "Delete this config?",
+    "deleteCancel": "Cancel",
+    "deleteOk": "Confirm",
+    "server": "服务器",
+    "panelPort": "面板端口",
+    "currentPort": "当前端口",
+    "nextPort": "新端口",
+    "switch": "切换到此端口",
+    "switchRandom": "随机端口",
+    "randomHint": "随机端口会先改面板并探测连通，通了才写 Clash；不通则自动恢复原端口。",
+    "randomTesting": "正在随机改端口并探测连通…",
+    "empty": "还没有导入面板。选择安装结果里的 install-result.env。",
+    "dropHint": "You can also drop install-result.env onto this page",
+    "dropping": "Drop to import install-result.env",
+    "noInbound": "面板里还没有入站。先在面板创建一条，再回来同步。",
+    "hint": "同步会按面板当前入站重写本机 Clash 节点（有什么写什么，不叠加旧端口）。改端口前请确认安全组已放行。",
+    "imported": "已导入面板",
+    "importedProfile": "Imported {{count}} node(s) into {{profile}} from the template",
+    "importedWithPort": "No port besides 443. Added {{port}} from the existing inbound and imported {{count}} node(s) into {{profile}}",
+    "synced": "已同步 {{count}} 个节点到 {{profile}}",
+    "switched": "已切换到 {{port}}，配置：{{profile}}",
+    "remoteWarning": "这条配置是远程订阅，下次更新订阅时端口可能被覆盖。",
+    "protocol": "协议",
+    "disabled": "未启用",
+    "portLocked": "不可改端口",
+    "portLockedHint": "{{port}} 端口不可更改"
   },
   "feedback": {
     "errors": {

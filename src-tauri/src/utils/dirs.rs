@@ -9,12 +9,12 @@ use std::{
 use tauri::Manager as _;
 
 #[cfg(not(feature = "verge-dev"))]
-pub static APP_ID: &str = "io.github.clash-verge-rev.clash-verge-rev";
+pub static APP_ID: &str = "io.myclash.app";
 #[cfg(not(feature = "verge-dev"))]
 pub static BACKUP_DIR: &str = "clash-verge-rev-backup";
 
 #[cfg(feature = "verge-dev")]
-pub static APP_ID: &str = "io.github.clash-verge-rev.clash-verge-rev.dev";
+pub static APP_ID: &str = "io.myclash.app.dev";
 #[cfg(feature = "verge-dev")]
 pub static BACKUP_DIR: &str = "clash-verge-rev-backup-dev";
 
@@ -220,9 +220,9 @@ fn sidecar_ipc_path_for(
     let root = std::ffi::CStr::from_bytes_until_nul(&buffer)
         .map_err(|_| anyhow::anyhow!("macOS per-user temporary directory is not NUL-terminated"))?;
     #[cfg(feature = "verge-dev")]
-    let filename = "verge-mihomo-dev.sock";
+    let filename = "myclash-mihomo-dev.sock";
     #[cfg(not(feature = "verge-dev"))]
-    let filename = "verge-mihomo.sock";
+    let filename = "myclash-mihomo.sock";
     let path = PathBuf::from(OsStr::from_bytes(root.to_bytes())).join(filename);
 
     let path_len = path.as_os_str().as_bytes().len();
@@ -259,7 +259,7 @@ mod ipc_tests {
     #[test]
     fn sidecar_ipc_stays_in_the_app_root() {
         let identity = OwnerIdentity::Unix { uid: 501, gid: 20 };
-        let app_root = Path::new("/home/test/.local/share/io.github.clash-verge-rev.clash-verge-rev");
+        let app_root = Path::new("/home/test/.local/share/io.myclash.app");
         let path = sidecar_ipc_path_for(app_root, &identity);
 
         assert_eq!(path, app_root.join("verge-mihomo.sock"));
@@ -280,15 +280,15 @@ mod ipc_tests {
     fn sidecar_ipc_ignores_long_app_root_and_fits_sockaddr_un() -> anyhow::Result<()> {
         let identity = OwnerIdentity::Unix { uid: 501, gid: 20 };
         let app_root =
-            Path::new("/Users/support/Library/Application Support/io.github.clash-verge-rev.clash-verge-rev.dev");
+            Path::new("/Users/support/Library/Application Support/io.myclash.app.dev");
         let path = sidecar_ipc_path_for(app_root, &identity)?;
 
         assert!(!path.starts_with(app_root));
         assert!(path.as_os_str().as_bytes().len() < 104);
         #[cfg(feature = "verge-dev")]
-        assert_eq!(path.file_name(), Some(OsStr::new("verge-mihomo-dev.sock")));
+        assert_eq!(path.file_name(), Some(OsStr::new("myclash-mihomo-dev.sock")));
         #[cfg(not(feature = "verge-dev"))]
-        assert_eq!(path.file_name(), Some(OsStr::new("verge-mihomo.sock")));
+        assert_eq!(path.file_name(), Some(OsStr::new("myclash-mihomo.sock")));
         assert_eq!(path, sidecar_ipc_path_for(Path::new("/different/root"), &identity)?);
         assert!(path.parent().is_some_and(Path::is_dir));
         Ok(())

@@ -1,0 +1,116 @@
+name: MyClash Release
+
+on:
+  push:
+    branches: [myclash]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: myclash-release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  CARGO_INCREMENTAL: 0
+  HUSKY: 0
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Read version
+        id: version
+        run: echo "version=$(jq -r .version package.json)" >> "$GITHUB_OUTPUT"
+
+      - name: Publish Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: myclash
+          target_commitish: ${{ github.sha }}
+          name: MyClash ${{ steps.version.outputs.version }}
+          prerelease: true
+          body: |
+            Built from clash-verge-rev v${{ steps.version.outputs.version }} plus the 3x-ui port tools.
+
+            - macOS Apple Silicon: MyClash_${{ steps.version.outputs.version }}_aarch64.dmg
+            - macOS Intel: MyClash_${{ steps.version.outputs.version }}_x64.dmg
+            - Windows x64: MyClash_${{ steps.version.outputs.version }}_x64-setup.exe
+            - Windows ARM64: MyClash_${{ steps.version.outputs.version }}_arm64-setup.exe
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  build:
+    needs: release
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: macos-latest
+            target: aarch64-apple-darwin
+          - os: macos-latest
+            target: x86_64-apple-darwin
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+          - os: windows-latest
+            target: aarch64-pc-windows-msvc
+          - os: ubuntu-22.04
+            target: x86_64-unknown-linux-gnu
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v7
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: '1.99.1'
+          targets: ${{ matrix.target }}
+
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+        with:
+          prefix-key: v1-rust
+          shared-key: myclash-${{ matrix.os }}-${{ matrix.target }}
+          workspaces: |
+            . -> target
+
+      - name: Install Linux dependencies
+        if: matrix.os == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libxslt1.1 libwebkit2gtk-4.1-dev libayatana-appindicator3-dev librsvg2-dev patchelf
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          run_install: false
+
+      - name: Install Node
+        uses: actions/setup-node@v7
+        with:
+          node-version: '26.13.0'
+          cache: pnpm
+
+      - name: Install dependencies and sidecars
+        run: |
+          pnpm i --frozen-lockfile
+          pnpm run prebuild ${{ matrix.target }}
+
+      - name: Build and upload
+        uses: tauri-apps/tauri-action@v1
+        env:
+          NODE_OPTIONS: '--max_old_space_size=4096'
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: myclash
+          releaseName: MyClash ${{ needs.release.outputs.version }}
+          prerelease: true
+          tauriScript: pnpm
+          args: --target ${{ matrix.target }}

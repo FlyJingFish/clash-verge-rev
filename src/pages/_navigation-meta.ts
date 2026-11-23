@@ -8,6 +8,10 @@ export const navigationItems = {
     label: 'layout.components.navigation.tabs.profiles',
     path: '/profile',
   },
+  port: {
+    label: 'layout.components.navigation.tabs.port',
+    path: '/port',
+  },
   connections: {
     label: 'layout.components.navigation.tabs.connections',
     path: '/connections',

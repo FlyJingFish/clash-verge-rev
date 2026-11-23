@@ -9,6 +9,7 @@
         "rules": "Aturan",
         "logs": "Log",
         "unlock": "Test",
+        "port": "Port",
         "settings": "Pengaturan"
       },
       "menu": {
@@ -51,6 +52,39 @@
       "tunTitle": "Mode TUN memerlukan layanan sistem",
       "tunMessage": "Mode TUN memerlukan layanan sistem Clash Verge untuk mengambil alih lalu lintas jaringan. Setelah terpasang, mode TUN akan diaktifkan untuk Anda."
     }
+  },
+  "portSwitch": {
+    "title": "Port",
+    "import": "Import install-result.env",
+    "refresh": "Refresh inbounds",
+    "delete": "Delete config",
+    "deleteTitle": "Delete config",
+    "deleteConfirm": "Delete this config?",
+    "deleteCancel": "Cancel",
+    "deleteOk": "Confirm",
+    "server": "Server",
+    "panelPort": "Panel port",
+    "currentPort": "Current port",
+    "nextPort": "New port",
+    "switch": "Switch to this port",
+    "switchRandom": "Random port",
+    "randomHint": "Random mode updates the panel first, probes connectivity, then writes Clash only if reachable; otherwise it rolls back.",
+    "randomTesting": "Picking a random port and probing connectivity…",
+    "empty": "No panel imported yet. Choose install-result.env from the install result.",
+    "dropHint": "You can also drop install-result.env onto this page",
+    "dropping": "Drop to import install-result.env",
+    "noInbound": "This panel has no inbound yet. Create one in the panel, then switch its port here.",
+    "hint": "The new port must already be allowed by the server firewall. Switching updates that 3x-ui inbound and the matching local Clash profile.",
+    "imported": "Panel imported",
+    "importedProfile": "Imported {{count}} node(s) into {{profile}} from the template",
+    "importedWithPort": "No port besides 443. Added {{port}} from the existing inbound and imported {{count}} node(s) into {{profile}}",
+    "synced": "Synced {{count}} node(s) to {{profile}}",
+    "switched": "Switched to {{port}}. Profile: {{profile}}",
+    "remoteWarning": "This profile is a remote subscription. The next update may overwrite the port.",
+    "protocol": "Protocol",
+    "disabled": "Disabled",
+    "portLocked": "port locked",
+    "portLockedHint": "Port {{port}} cannot be changed"
   },
   "feedback": {
     "errors": {
