@@ -1,4 +1,5 @@
 name: MyClash Release
+# Packages MyClash from the myclash branch.
 
 on:
   push:
