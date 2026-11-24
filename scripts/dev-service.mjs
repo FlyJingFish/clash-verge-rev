@@ -6,9 +6,9 @@ import { fileURLToPath } from 'node:url'
 export const developmentServiceDirectoryEnvironment =
   'CLASH_VERGE_DEV_SERVICE_DIR'
 const repositoryRoot = resolve(dirname(fileURLToPath(import.meta.url)), '..')
-const serviceRepository = resolve(
+const serviceRepository = join(
   repositoryRoot,
-  '..',
+  'myclash',
   'clash-verge-service-ipc',
 )
 const serviceManifest = join(serviceRepository, 'Cargo.toml')
@@ -78,9 +78,9 @@ export async function prepareDevelopmentService() {
     }
   }
   const executables = [
-    'clash-verge-service',
-    'clash-verge-service-install',
-    'clash-verge-service-uninstall',
+    'myclash-service',
+    'myclash-service-install',
+    'myclash-service-uninstall',
     'service-integration-driver',
   ].map((name) => {
     const executable = artifacts.get(name)
@@ -107,7 +107,7 @@ export async function ensureDevelopmentService({
   const extension = platform === 'win32' ? '.exe' : ''
   const installer = join(
     serviceDirectory,
-    `clash-verge-service-install${extension}`,
+    `myclash-service-install${extension}`,
   )
   const host = execFileSync('rustc', ['-vV'], { encoding: 'utf8' }).match(
     /^host: (.+)$/m,

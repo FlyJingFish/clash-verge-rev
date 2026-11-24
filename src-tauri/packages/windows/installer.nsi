@@ -556,19 +556,19 @@ FunctionEnd
 
 
 !macro CheckAllVergeProcesses
-  ; Check if clash-verge-service.exe is running
+  ; Check if myclash-service.exe is running
   !if "${INSTALLMODE}" == "currentUser"
-    nsis_tauri_utils::FindProcessCurrentUser "clash-verge-service.exe"
+    nsis_tauri_utils::FindProcessCurrentUser "myclash-service.exe"
   !else
-    nsis_tauri_utils::FindProcess "clash-verge-service.exe"
+    nsis_tauri_utils::FindProcess "myclash-service.exe"
   !endif
   Pop $R0
   ${If} $R0 = 0
-    DetailPrint "Kill clash-verge-service.exe..."
+    DetailPrint "Kill myclash-service.exe..."
     !if "${INSTALLMODE}" == "currentUser"
-      nsis_tauri_utils::KillProcessCurrentUser "clash-verge-service.exe"
+      nsis_tauri_utils::KillProcessCurrentUser "myclash-service.exe"
     !else
-      nsis_tauri_utils::KillProcess "clash-verge-service.exe"
+      nsis_tauri_utils::KillProcess "myclash-service.exe"
     !endif
   ${EndIf}
 
@@ -974,13 +974,13 @@ Section Install
   ; Not fatal on failure; a later elevated service install can stage the cores again.
   !ifdef MIHOMO_SHA256
     DetailPrint "Staging myclash-mihomo for ${PRODUCTNAME} Service..."
-    nsExec::ExecToLog '"$INSTDIR\resources\clash-verge-service-install.exe" --install-core "$INSTDIR\myclash-mihomo.exe" --sha256 "${MIHOMO_SHA256}"'
+    nsExec::ExecToLog '"$INSTDIR\resources\myclash-service-install.exe" --install-core "$INSTDIR\myclash-mihomo.exe" --sha256 "${MIHOMO_SHA256}"'
     Pop $0
     ${IfThen} $0 != 0 ${|} DetailPrint "Staging myclash-mihomo returned $0" ${|}
   !endif
   !ifdef MIHOMO_ALPHA_SHA256
     DetailPrint "Staging myclash-mihomo-alpha for ${PRODUCTNAME} Service..."
-    nsExec::ExecToLog '"$INSTDIR\resources\clash-verge-service-install.exe" --install-core "$INSTDIR\myclash-mihomo-alpha.exe" --sha256 "${MIHOMO_ALPHA_SHA256}"'
+    nsExec::ExecToLog '"$INSTDIR\resources\myclash-service-install.exe" --install-core "$INSTDIR\myclash-mihomo-alpha.exe" --sha256 "${MIHOMO_ALPHA_SHA256}"'
     Pop $0
     ${IfThen} $0 != 0 ${|} DetailPrint "Staging myclash-mihomo-alpha returned $0" ${|}
   !endif

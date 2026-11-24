@@ -25,9 +25,9 @@
       }
     },
     "externalBin": [
-      "./sidecar/clash-verge-service",
-      "./sidecar/clash-verge-service-install",
-      "./sidecar/clash-verge-service-uninstall",
+      "./sidecar/myclash-service",
+      "./sidecar/myclash-service-install",
+      "./sidecar/myclash-service-uninstall",
       "./sidecar/myclash-mihomo",
       "./sidecar/myclash-mihomo-alpha"
     ]
